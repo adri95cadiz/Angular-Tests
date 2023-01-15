@@ -1,0 +1,49 @@
+<div class="show-mobile">
+  <div>
+    <button (click)="toggleMenu()">
+      <fa-icon width="50" [icon]="faBurger"></fa-icon>
+    </button>
+    <a href="">
+      <img width="50" src="https://www.w3schools.com/howto/img_avatar.png" alt="logo">
+    </a>
+    <a href="">
+      <fa-icon width="50" [icon]="faCartShopping"></fa-icon>
+    </a>
+    <span class="counter">
+      {{ counter }}
+    </span>
+  </div>
+  <div [class.active]="activeMenu" class="side-menu">
+    <button (click)="toggleMenu()">Close</button>
+    <ul>
+      <li><a href="">All</a></li>
+      <li><a href="">Clothes</a></li>
+      <li><a href="">Electronics</a></li>
+    </ul>
+  </div>
+</div>
+<div class="hide-mobile">
+  <div>
+    <nav>
+      <a class="logo" href="">
+        <img width="50" src="https://www.w3schools.com/howto/img_avatar.png" alt="logo">
+      </a>
+      <ul>
+        <li><a href="">All</a></li>
+        <li><a href="">Clothes</a></li>
+        <li><a href="">Electronics</a></li>
+      </ul>
+    </nav>
+    <div class="info">
+      <div class="account">adri95cadiz@gmail.com</div>
+      <div>
+        <a href="">
+          <fa-icon width="50" [icon]="faCartShopping"></fa-icon>
+        </a>
+        <span class="counter">
+          {{ counter }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
