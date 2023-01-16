@@ -4,10 +4,9 @@ import { BehaviorSubject } from 'rxjs';
 import { Product } from '../models/product.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StoreService {
-
   private myShoppingCart: Product[] = [];
   private myCart = new BehaviorSubject<Product[]>([]);
 
@@ -19,7 +18,7 @@ export class StoreService {
   }
 
   removeProduct(id: string) {
-    this.myShoppingCart = this.myShoppingCart.filter(item => item.id !== id);
+    this.myShoppingCart = this.myShoppingCart.filter((item) => item.id !== id);
   }
 
   getTotal() {
