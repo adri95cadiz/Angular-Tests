@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { switchMap, zip } from 'rxjs';
 
 import {
   Product,
@@ -45,13 +46,38 @@ export class ProductListComponent implements OnInit {
 
   onShowDetail(id: string) {
     this.statusDetail = 'loading';
-    this.productsService.getProduct(id).subscribe((data) => {
-      this.productChosen = data;
-      this.toggleProductDetail();
-      this.statusDetail = 'success';
-    }, (error) => {
-      console.log(error);
-      this.statusDetail = 'error';
+    this.productsService.getProduct(id).subscribe(
+      (data) => {
+        this.productChosen = data;
+        this.toggleProductDetail();
+        this.statusDetail = 'success';
+      },
+      (errorMsg) => {
+        window.alert(errorMsg);
+        this.statusDetail = 'error';
+      }
+    );
+  }
+
+  readAndUpdate(id: string) {
+    // Example 1: Avoid nested subscribe, use switchMap
+    this.productsService.getProduct(id).
+    pipe(
+      switchMap((product: Product) => {
+        return this.productsService.updateProduct(product.id, {title : 'change'});
+      }),
+    ).
+    subscribe((data: Product) => {
+      console.log(data);
+    });
+
+    // Example 2: Make parallel requests, use zip
+    zip(
+      this.productsService.getProduct(id),
+      this.productsService.updateProduct(id, {title : 'change'}),
+    ).subscribe(([product, updatedProduct]) => {
+      console.log(product);
+      console.log(updatedProduct);
     });
   }
 

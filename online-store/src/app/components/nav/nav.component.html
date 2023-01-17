@@ -39,7 +39,11 @@
       </ul>
     </nav>
     <div class="info">
-      <div class="account">adri95cadiz@gmail.com</div>
+      <div class="account">
+        <button *ngIf="!profile else elseBlock" (click)="login()">Login</button>
+        <button *ngIf="!profile" (click)="createUser()">Register</button>
+        <ng-template #elseBlock>{{ profile.email }}</ng-template>
+      </div>
       <div>
         <a href="">
           <fa-icon width="50" [icon]="faCartShopping"></fa-icon>
