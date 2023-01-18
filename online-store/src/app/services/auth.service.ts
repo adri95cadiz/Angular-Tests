@@ -32,12 +32,12 @@ export class AuthService {
     //let headers = new HttpHeaders();
     //headers = headers.set('Authorization', `Bearer ${token}`);
     //headers = headers.set('Content-type', 'application/json');
-    return this.http.get<User>(`${this.apiUrl}/profile`, { /*headers*/ });
+    return this.http.get<User>(`${this.apiUrl}/profile`, {
+      /*headers*/
+    });
   }
 
   loginAndGet(email: string, password: string) {
-    return this.login(email, password).pipe(
-      switchMap(() => this.getProfile())
-    );
+    return this.login(email, password).pipe(switchMap(() => this.getProfile()));
   }
 }

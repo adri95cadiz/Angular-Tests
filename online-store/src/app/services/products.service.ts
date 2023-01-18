@@ -19,17 +19,17 @@ import { checkTime } from '../interceptors/time.interceptor';
   providedIn: 'root',
 })
 export class ProductsService {
-  private apiUrl = `${environment.API_URL}/api/products`;
+  private apiUrl = `${environment.API_URL}/api`;
 
   constructor(private http: HttpClient) {}
 
   getAllProducts() {
-    return this.http.get<Product[]>(this.apiUrl).pipe(retry(3));
+    return this.http.get<Product[]>(`${this.apiUrl}/products`).pipe(retry(3));
   }
 
   getProductsByPage(limit: number, offset: number) {
     return this.http
-      .get<Product[]>(this.apiUrl, {
+      .get<Product[]>(`${this.apiUrl}/products`, {
         params: {
           limit: limit.toString(),
           offset: offset.toString(),
@@ -49,8 +49,19 @@ export class ProductsService {
       );
   }
 
+  getProductsByCategory(categoryId: string, limit: number, offset: number) {
+    return this.http
+      .get<Product[]>(`${this.apiUrl}/categories/${categoryId}/products`, {
+        params: {
+          limit: limit.toString(),
+          offset: offset.toString(),
+        },
+      })
+      .pipe(retry(3));
+  }
+
   getProduct(id: string) {
-    return this.http.get<Product>(`${this.apiUrl}/${id}`).pipe(
+    return this.http.get<Product>(`${this.apiUrl}/products/${id}`).pipe(
       catchError((error: HttpErrorResponse) => {
         /** Errores:
          *    500: Internal Server Error,
@@ -76,10 +87,10 @@ export class ProductsService {
   }
 
   updateProduct(id: string, dto: UpdateProductDTO) {
-    return this.http.put<Product>(`${this.apiUrl}/${id}`, dto);
+    return this.http.put<Product>(`${this.apiUrl}/products/${id}`, dto);
   }
 
   deleteProduct(id: string) {
-    return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
+    return this.http.delete<boolean>(`${this.apiUrl}/products/${id}`);
   }
 }

@@ -1,0 +1,15 @@
+<a [routerLink]="['/product', product.id]">
+  <app-img
+    *ngIf="product.images.length > 0"
+    [img]="product.images[0]"
+  ></app-img>
+</a>
+<h2>Price: {{ product.price | currency : "€" : "symbol" : "1.2-2" }}</h2>
+<p>{{ product.title }}</p>
+<p style="font-style:italic">{{ product.category.name }}</p>
+<!--<p *ngIf="product.taxes">VAT: {{ product.taxes | currency : "€" : "symbol" : "1.2-2" }}</p>
+<p appHighlight>{{ product.description }}</p>-->
+<a routerLink="." [queryParams]="{ product: product.id }">
+  <button>View Detail</button>
+</a>
+<button (click)="onAddToCart()">Add to cart</button>

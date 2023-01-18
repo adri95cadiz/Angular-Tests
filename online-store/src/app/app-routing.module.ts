@@ -1,28 +1,41 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, /*PreloadAllModules*/ } from '@angular/router';
+import { QuicklinkStrategy } from 'ngx-quicklink';
 
-import { HomeComponent } from './pages/home/home.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { CategoryComponent } from './pages/category/category.component';
-import { MycartComponent } from './pages/mycart/mycart.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { RecoveryComponent } from './pages/recovery/recovery.component';
-import { ProfileComponent } from './pages/profile/profile.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+
+//import { CustomPreloadService } from './services/custom-preload.service';
 
 const routes: Routes = [
   {
-    path: 'home',
-    component: HomeComponent,
+    path: '',
+    loadChildren: () =>
+      import('./website/website.module').then((m) => m.WebsiteModule),
+    data: {
+      preload: true,
+    }
   },
   {
-    path: 'category',
-    component: CategoryComponent,
-  }
+    path: 'cms',
+    loadChildren: () => import('./cms/cms.module').then((m) => m.CmsModule),
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
+  },
 ];
 
+/**
+ * Set preloadingStrategy to PreloadAllModules to preload all lazy loaded modules,
+ * recommended for small apps, for bigger apps use custom preloading strategy.
+ *
+ * Set preloadingStrategy to QuicklinkStrategy to preload all lazy loaded modules
+ * that are in the viewport or close to it using Quicklink library. (Recommended)
+ */
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: /*PreloadAllModules*//*CustomPreloadService*/QuicklinkStrategy }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

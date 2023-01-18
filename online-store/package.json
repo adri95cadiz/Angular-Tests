@@ -27,6 +27,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "date-fns": "^2.29.3",
     "file-saver": "^2.0.5",
+    "ngx-quicklink": "^0.3.0",
     "rxjs": "~7.5.0",
     "swiper": "^8.4.5",
     "tslib": "^2.3.0",
