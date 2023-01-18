@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { faBars, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBars,
+  faCartShopping,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { StoreService } from '../../../services/store.service';
 import { AuthService } from '../../../services/auth.service';
 import { UsersService } from '../../../services/users.service';
 import { CategoriesService } from 'src/app/services/categories.service';
+import { TokenService } from './../../../services/token.service';
 
 import { User } from '../../../models/user.model';
 import { Category } from 'src/app/models/category.model';
@@ -18,16 +24,19 @@ import { Category } from 'src/app/models/category.model';
 export class NavComponent implements OnInit {
   faBars = faBars;
   faCartShopping = faCartShopping;
+  faUser = faUser;
   activeMenu = false;
   counter = 0;
-  profile!: User;
+  profile: User | null = null;
   categories: Category[] = [];
 
   constructor(
     private storeService: StoreService,
     private authService: AuthService,
     private usersService: UsersService,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private TokenService: TokenService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +44,9 @@ export class NavComponent implements OnInit {
       this.counter = products.length;
     });
     this.getAllCategories();
+    this.authService.user$.subscribe((user) => {
+      this.profile = user;
+    });
   }
 
   toggleMenu() {
@@ -47,6 +59,7 @@ export class NavComponent implements OnInit {
         name: 'Adri',
         email: 'adri@mail.com',
         password: '123456',
+        role: 'admin',
       })
       .subscribe((data) => {
         console.log(data);
@@ -59,8 +72,14 @@ export class NavComponent implements OnInit {
     });
   }
 
+  logout() {
+    this.authService.logout();
+    this.profile = null;
+    this.router.navigate(['/home']);
+  }
+
   getProfile() {
-    this.authService.getProfile().subscribe((user) => {
+    this.authService.user$.subscribe((user) => {
       this.profile = user;
     });
   }

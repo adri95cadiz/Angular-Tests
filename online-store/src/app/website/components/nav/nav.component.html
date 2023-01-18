@@ -56,7 +56,13 @@
           Login
         </button>
         <button *ngIf="!profile" (click)="createUser()">Register</button>
-        <ng-template #elseBlock>{{ profile.email }}</ng-template>
+        <ng-template #elseBlock>
+          <a routerLink="/profile">
+            <fa-icon width="50" [icon]="faUser"></fa-icon>
+            {{ profile?.email }}
+            <button (click)="logout()">Logout</button>
+          </a>
+        </ng-template>
       </div>
       <div>
         <a href="">
