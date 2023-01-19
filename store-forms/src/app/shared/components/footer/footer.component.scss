@@ -1,0 +1,25 @@
+footer {
+  padding: 50px 0px;
+  margin-top: 20px;
+  background-color: #3f51b5;
+  .box {
+    h3 {
+      color: white;
+    }
+    input{
+      color: white;
+    }
+    ul {
+      list-style: none;
+      margin: 0px;
+      padding: 0px;
+      li {
+        margin: 10px 0px;
+        a {
+          text-decoration: none;
+          color: white;
+        }
+      }
+    }
+  }
+}
