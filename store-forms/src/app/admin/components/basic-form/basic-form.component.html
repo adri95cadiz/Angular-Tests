@@ -1,116 +1,248 @@
-<p>
-  Name: {{ nameField.value }}
-  <input type="text" [formControl]="nameField">
-  <!--<code>
-    <button (click)="getNameValue()">Get Value</button>
-    <pre>{{ nameField | json }}</pre>
-  </code>-->
-</p>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div formGroupName="fullname">
+    <p>
+      First Name: {{ nameField.value }}
+      <input
+        [class.is-valid]="isNameValid"
+        [class.is-invalid]="isNameInvalid"
+        type="text"
+        formControlName="name"
+      />
+      <button [disabled]="nameField.invalid" (click)="getNameValue()">
+        Get Value
+      </button>
+      <!--
+      Para mostrar un json estructuradamente se puede utilizar la siguiente estructura
+      <code>
+        <pre>{{ nameField | json }}</pre>
+      </code>-->
+    </p>
 
-<p>
-  Email: {{ emailField.value }}
-  <input type="email" [formControl]="emailField">
-</p>
+    <div class="messages" [class.active]="nameField.invalid">
+      <p>
+        <!--Touched se activa cuando el usuario ha pasado por el campo y ha dejado de hacer focus en él-->
+        <strong *ngIf="nameField.touched && nameField.hasError('required')"
+          >Este campo es requerido</strong
+        >
+      </p>
 
-<p>
-  Phone: {{ phoneField.value }}
-  <input type="tel" [formControl]="phoneField">
-</p>
+      <p>
+        <!--Dirty se activa cuando el usuario ha modificado el valor del campo aunque no haya salido del focus-->
+        <strong *ngIf="nameField.dirty && nameField.hasError('maxlength')"
+          >No se puede introducir más de 10 caracteres</strong
+        >
+      </p>
 
-<p>
-  Color: {{ colorField.value }}
-  <input type="color" [formControl]="colorField">
-</p>
+      <p>
+        <!--Dirty se activa cuando el usuario ha modificado el valor del campo aunque no haya salido del focus-->
+        <strong *ngIf="nameField.dirty && nameField.hasError('pattern')"
+          >No debe tener caracteres extraños</strong
+        >
+      </p>
+    </div>
 
-<p>
-  Age: {{ numberField.value }}
-  <input type="number" [formControl]="numberField">
-</p>
+    <p>
+      Last Name: {{ lastField.value }}
+      <input type="text" formControlName="last" />
+    </p>
 
+    <div class="messages" [class.active]="lastField.invalid">
+      <p>
+        <!--Touched se activa cuando el usuario ha pasado por el campo y ha dejado de hacer focus en él-->
+        <strong *ngIf="lastField.touched && lastField.hasError('required')"
+          >Este campo es requerido</strong
+        >
+      </p>
 
-<p>
-  Date: {{ dateField.value }}
-  <input type="date" [formControl]="dateField">
-</p>
+      <p>
+        <!--Dirty se activa cuando el usuario ha modificado el valor del campo aunque no haya salido del focus-->
+        <strong *ngIf="lastField.dirty && lastField.hasError('maxlength')"
+          >No se puede introducir más de 10 caracteres</strong
+        >
+      </p>
 
-<p>
-  Month: {{ monthField.value }}
-  <input type="month" [formControl]="monthField">
-</p>
+      <p>
+        <!--Dirty se activa cuando el usuario ha modificado el valor del campo aunque no haya salido del focus-->
+        <strong *ngIf="lastField.dirty && lastField.hasError('pattern')"
+          >No debe tener caracteres extraños</strong
+        >
+      </p>
+    </div>
+  </div>
 
-<p>
-  Week: {{ weekField.value }}
-  <input type="week" [formControl]="weekField">
-</p>
+  <p>
+    Email: {{ emailField.value }}
+    <input type="email" formControlName="email" />
+  </p>
 
-<p>
-  Range: {{ rangeField.value }}
-  <input type="range" [formControl]="rangeField">
-</p>
+  <div class="messages" [class.active]="emailField.invalid">
+    <p>
+      <strong *ngIf="emailField.touched && emailField.hasError('required')"
+        >Este campo es requerido</strong
+      >
+    </p>
 
-<p>
-  Date time Local: {{ dateLocalField.value }}
-  <input type="datetime-local" [formControl]="dateLocalField">
-</p>
+    <p>
+      <strong *ngIf="emailField.dirty && emailField.hasError('email')"
+        >Esto no es un email válido</strong
+      >
+    </p>
+  </div>
 
-<p>
-  Search: {{ searchField.value }}
-  <input type="search" [formControl]="searchField">
-</p>
+  <p>
+    Phone: {{ phoneField.value }}
+    <input
+      [class.is-valid]="isPhoneValid"
+      [class.is-invalid]="isPhoneInvalid"
+      type="tel"
+      formControlName="phone"
+    />
+  </p>
 
-<p>
-  Category: {{ categoryField.value }}
-  <select [formControl]="categoryField">
-    <option value="category-1">Category 1</option>
-    <option value="category-2">Category 2</option>
-    <option value="category-3">Category 3</option>
-    <option value="category-4">Category 4</option>
-  </select>
-</p>
+  <div class="messages" [class.active]="isPhoneInvalid">
+    <p>
+      <strong *ngIf="phoneField.touched && phoneField.hasError('required')"
+        >Este campo es requerido</strong
+      >
+    </p>
+  </div>
 
-<p>
-  Tags: {{ tagField.value }}
-  <select [formControl]="tagField" multiple>
-    <option value="tag-1">Tag 1</option>
-    <option value="tag-2">Tag 2</option>
-    <option value="tag-3">Tag 3</option>
-    <option value="tag-4">Tag 4</option>
-  </select>
-</p>
+  <p>
+    Color: {{ colorField.value }}
+    <input type="color" formControlName="color" />
+  </p>
 
-<p>
-  Agree: {{ agreeField.value }}
-  <input type="checkbox" [formControl]="agreeField">
-</p>
+  <p>
+    Age: {{ numberField.value }}
+    <input type="number" formControlName="number" />
+  </p>
 
-<p>
-  Gender: {{ genderField.value }}
-  <label>
-    <input name="gender" type="radio" value="male" [formControl]="genderField">
-    Male
-  </label>
-  <label>
-    <input name="gender" type="radio" value="female" [formControl]="genderField">
-    Female
-  </label>
-  <label>
-    <input name="gender" type="radio" value="other" [formControl]="genderField">
-    Other
-  </label>
-</p>
+  <div class="messages" [class.active]="numberField.invalid">
+    <p>
+      <strong *ngIf="numberField.touched && numberField.hasError('required')"
+        >Este campo es requerido</strong
+      >
+    </p>
 
-<p>
-  Zone: {{ zoneField.value }}
-  <label>
-    <input name="zone" type="radio" value="zona-1" [formControl]="zoneField">
-    Zona 1
-  </label>
-  <label>
-    <input name="zone" type="radio" value="zona-2" [formControl]="zoneField">
-    Zona 2
-  </label>
-  <label>
-    <input name="zone" type="radio" value="zona-3" [formControl]="zoneField">
-    Zona 3
-  </label>
-</p>
+    <p>
+      <strong *ngIf="numberField.dirty && numberField.hasError('min')"
+        >Debe ser mayor de edad</strong
+      >
+    </p>
+
+    <p>
+      <strong *ngIf="numberField.dirty && numberField.hasError('max')"
+        >Debe ser menor de 100 años</strong
+      >
+    </p>
+  </div>
+
+  <p>
+    Date: {{ dateField.value }}
+    <input type="date" formControlName="date" />
+  </p>
+
+  <p>
+    Month: {{ monthField.value }}
+    <input type="month" formControlName="month" />
+  </p>
+
+  <p>
+    Week: {{ weekField.value }}
+    <input type="week" formControlName="week" />
+  </p>
+
+  <p>
+    Range: {{ rangeField.value }}
+    <input type="range" formControlName="range" />
+  </p>
+
+  <p>
+    Date time Local: {{ dateLocalField.value }}
+    <input type="datetime-local" formControlName="dateLocal" />
+  </p>
+
+  <p>
+    Search: {{ searchField.value }}
+    <input type="search" formControlName="search" />
+  </p>
+
+  <p>
+    Category: {{ categoryField.value }}
+    <select formControlName="category">
+      <option value="category-1">Category 1</option>
+      <option value="category-2">Category 2</option>
+      <option value="category-3">Category 3</option>
+      <option value="category-4">Category 4</option>
+    </select>
+  </p>
+
+  <p>
+    Tags: {{ tagField.value }}
+    <select formControlName="tag" multiple>
+      <option value="tag-1">Tag 1</option>
+      <option value="tag-2">Tag 2</option>
+      <option value="tag-3">Tag 3</option>
+      <option value="tag-4">Tag 4</option>
+    </select>
+  </p>
+
+  <p>
+    Agree: {{ agreeField.value }}
+    <input type="checkbox" formControlName="agree" />
+  </p>
+
+  <div class="messages" [class.active]="agreeField.invalid">
+    <p>
+      <strong *ngIf="agreeField.hasError('required')"
+        >Tienes que aceptar los términos y condiciones</strong
+      >
+    </p>
+  </div>
+
+  <p>
+    Gender: {{ genderField.value }}
+    <label>
+      <input name="gender" type="radio" value="male" formControlName="gender" />
+      Male
+    </label>
+    <label>
+      <input
+        name="gender"
+        type="radio"
+        value="female"
+        formControlName="gender"
+      />
+      Female
+    </label>
+    <label>
+      <input
+        name="gender"
+        type="radio"
+        value="other"
+        formControlName="gender"
+      />
+      Other
+    </label>
+  </p>
+
+  <p>
+    Zone: {{ zoneField.value }}
+    <label>
+      <input name="zone" type="radio" value="zona-1" formControlName="zone" />
+      Zona 1
+    </label>
+    <label>
+      <input name="zone" type="radio" value="zona-2" formControlName="zone" />
+      Zona 2
+    </label>
+    <label>
+      <input name="zone" type="radio" value="zona-3" formControlName="zone" />
+      Zona 3
+    </label>
+  </p>
+
+  <p>
+    <button type="submit">Enviar</button>
+  </p>
+</form>
