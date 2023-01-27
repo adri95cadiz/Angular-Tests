@@ -1,245 +1,174 @@
 <form [formGroup]="form" (ngSubmit)="save()">
   <div formGroupName="fullname">
-    <p>
-      First Name: {{ nameField.value }}
-      <input
-        [class.is-valid]="isNameValid"
-        [class.is-invalid]="isNameInvalid"
-        type="text"
-        formControlName="name"
-      />
-      <button [disabled]="nameField.invalid" (click)="getNameValue()">
-        Get Value
-      </button>
-      <!--
-      Para mostrar un json estructuradamente se puede utilizar la siguiente estructura
-      <code>
-        <pre>{{ nameField | json }}</pre>
-      </code>-->
-    </p>
+    <mat-form-field appearance="fill">
+      <mat-label>First Name: {{ nameField.value }}</mat-label>
+      <input matInput type="text" formControlName="name" />
+      <mat-icon matSuffix *ngIf="nameField.valid">done</mat-icon>
+      <mat-icon matSuffix *ngIf="nameField.invalid">close</mat-icon>
+    </mat-form-field>
 
     <div class="messages" [class.active]="nameField.invalid">
-      <p>
-        <!--Touched se activa cuando el usuario ha pasado por el campo y ha dejado de hacer focus en él-->
-        <strong *ngIf="nameField.touched && nameField.hasError('required')"
-          >Este campo es requerido</strong
-        >
-      </p>
-
-      <p>
-        <!--Dirty se activa cuando el usuario ha modificado el valor del campo aunque no haya salido del focus-->
-        <strong *ngIf="nameField.dirty && nameField.hasError('maxlength')"
-          >No se puede introducir más de 10 caracteres</strong
-        >
-      </p>
-
-      <p>
-        <!--Dirty se activa cuando el usuario ha modificado el valor del campo aunque no haya salido del focus-->
-        <strong *ngIf="nameField.dirty && nameField.hasError('pattern')"
-          >No debe tener caracteres extraños</strong
-        >
-      </p>
+      <mat-error *ngIf="nameField.touched && nameField.hasError('required')">
+        Este campo es requerido
+      </mat-error>
+      <mat-error *ngIf="nameField.dirty && nameField.hasError('maxlength')">
+        No se puede introducir más de 10 caracteres
+      </mat-error>
+      <mat-error *ngIf="nameField.dirty && nameField.hasError('pattern')">
+        No debe tener caracteres extraños
+      </mat-error>
     </div>
 
-    <p>
-      Last Name: {{ lastField.value }}
-      <input type="text" formControlName="last" />
-    </p>
+    <mat-form-field appearance="fill">
+      <mat-label>Last Name: {{ lastField.value }}</mat-label>
+      <input matInput type="text" formControlName="last" />
+    </mat-form-field>
 
-    <div class="messages" [class.active]="lastField.invalid">
-      <p>
-        <!--Touched se activa cuando el usuario ha pasado por el campo y ha dejado de hacer focus en él-->
-        <strong *ngIf="lastField.touched && lastField.hasError('required')"
-          >Este campo es requerido</strong
-        >
-      </p>
-
-      <p>
-        <!--Dirty se activa cuando el usuario ha modificado el valor del campo aunque no haya salido del focus-->
-        <strong *ngIf="lastField.dirty && lastField.hasError('maxlength')"
-          >No se puede introducir más de 10 caracteres</strong
-        >
-      </p>
-
-      <p>
-        <!--Dirty se activa cuando el usuario ha modificado el valor del campo aunque no haya salido del focus-->
-        <strong *ngIf="lastField.dirty && lastField.hasError('pattern')"
-          >No debe tener caracteres extraños</strong
-        >
-      </p>
+    <div class="messages" [class.active]="nameField.invalid">
+      <mat-error *ngIf="lastField.touched && lastField.hasError('required')">
+        Este campo es requerido
+      </mat-error>
+      <mat-error *ngIf="lastField.dirty && lastField.hasError('maxlength')">
+        No se puede introducir más de 10 caracteres
+      </mat-error>
+      <mat-error *ngIf="lastField.dirty && lastField.hasError('pattern')">
+        No debe tener caracteres extraños
+      </mat-error>
     </div>
   </div>
 
-  <p>
-    Email: {{ emailField.value }}
-    <input type="email" formControlName="email" />
-  </p>
+  <mat-form-field appearance="fill">
+    <mat-label>Email: {{ emailField.value }}</mat-label>
+    <input matInput type="email" formControlName="email" />
+  </mat-form-field>
 
   <div class="messages" [class.active]="emailField.invalid">
-    <p>
-      <strong *ngIf="emailField.touched && emailField.hasError('required')"
-        >Este campo es requerido</strong
-      >
-    </p>
+    <mat-error *ngIf="emailField.touched && emailField.hasError('required')">
+      Este campo es requerido
+    </mat-error>
+    <mat-error *ngIf="emailField.dirty && emailField.hasError('email')">
+      Esto no es un email válido
+    </mat-error>
+  </div>
 
-    <p>
-      <strong *ngIf="emailField.dirty && emailField.hasError('email')"
-        >Esto no es un email válido</strong
-      >
-    </p>
+  <mat-form-field appearance="fill">
+    <mat-label>Phone: {{ phoneField.value }}</mat-label>
+    <input matInput type="tel" formControlName="phone" />
+  </mat-form-field>
+
+  <div class="messages" [class.active]="phoneField.invalid">
+    <mat-error *ngIf="phoneField.touched && phoneField.hasError('required')">
+      Este campo es requerido
+    </mat-error>
   </div>
 
   <p>
-    Phone: {{ phoneField.value }}
-    <input
-      [class.is-valid]="isPhoneValid"
-      [class.is-invalid]="isPhoneInvalid"
-      type="tel"
-      formControlName="phone"
-    />
-  </p>
-
-  <div class="messages" [class.active]="isPhoneInvalid">
-    <p>
-      <strong *ngIf="phoneField.touched && phoneField.hasError('required')"
-        >Este campo es requerido</strong
-      >
-    </p>
-  </div>
-
-  <p>
-    Color: {{ colorField.value }}
-    <input type="color" formControlName="color" />
+    <mat-form-field appearance="fill">
+      <mat-label>Color: {{ colorField.value }}</mat-label>
+      <input matInput type="color" formControlName="color" />
+    </mat-form-field>
   </p>
 
   <p>
-    Age: {{ numberField.value }}
-    <input type="number" formControlName="number" />
-  </p>
+    <mat-form-field appearance="fill">
+      <mat-label>Age: {{ numberField.value }}</mat-label>
+      <input matInput type="number" formControlName="number" />
 
-  <div class="messages" [class.active]="numberField.invalid">
-    <p>
-      <strong *ngIf="numberField.touched && numberField.hasError('required')"
-        >Este campo es requerido</strong
-      >
-    </p>
+      <div class="messages" [class.active]="numberField.invalid">
+        <mat-error
+          *ngIf="numberField.touched && numberField.hasError('required')"
+        >
+          Este campo es requerido
+        </mat-error>
 
-    <p>
-      <strong *ngIf="numberField.dirty && numberField.hasError('min')"
-        >Debe ser mayor de edad</strong
-      >
-    </p>
+        <mat-error *ngIf="numberField.dirty && numberField.hasError('min')">
+          Debe ser mayor de edad
+        </mat-error>
 
-    <p>
-      <strong *ngIf="numberField.dirty && numberField.hasError('max')"
-        >Debe ser menor de 100 años</strong
-      >
-    </p>
-  </div>
-
-  <p>
-    Date: {{ dateField.value }}
-    <input type="date" formControlName="date" />
+        <mat-error *ngIf="numberField.dirty && numberField.hasError('max')">
+          Debe ser menor de 100 años
+        </mat-error>
+      </div>
+    </mat-form-field>
   </p>
 
   <p>
-    Month: {{ monthField.value }}
-    <input type="month" formControlName="month" />
+    <mat-form-field>
+      <mat-label>Date: {{ dateField.value }}</mat-label>
+      <input matInput formControlName="date" [matDatepicker]="picker" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
   </p>
 
   <p>
-    Week: {{ weekField.value }}
-    <input type="week" formControlName="week" />
+    <mat-form-field appearance="fill">
+      <mat-label>Range: {{ rangeField.value }}</mat-label>
+      <input matInput type="range" formControlName="range" />
+    </mat-form-field>
   </p>
 
   <p>
-    Range: {{ rangeField.value }}
-    <input type="range" formControlName="range" />
+    <mat-form-field appearance="fill">
+      <mat-label>Date time Local: {{ dateLocalField.value }}</mat-label>
+      <input matInput type="datetime-local" formControlName="dateLocal" />
+    </mat-form-field>
   </p>
 
   <p>
-    Date time Local: {{ dateLocalField.value }}
-    <input type="datetime-local" formControlName="dateLocal" />
+    <mat-form-field appearance="fill">
+      <mat-label>Search: {{ searchField.value }}</mat-label>
+      <input matInput type="search" formControlName="search" />
+    </mat-form-field>
   </p>
 
   <p>
-    Search: {{ searchField.value }}
-    <input type="search" formControlName="search" />
+    <mat-form-field appearance="fill">
+      <mat-label>Category: {{ categoryField.value }}</mat-label>
+      <mat-select formControlName="category">
+        <mat-option value="category-1">Category 1</mat-option>
+        <mat-option value="category-2">Category 2</mat-option>
+        <mat-option value="category-3">Category 3</mat-option>
+        <mat-option value="category-4">Category 4</mat-option>
+      </mat-select>
+    </mat-form-field>
   </p>
 
   <p>
-    Category: {{ categoryField.value }}
-    <select formControlName="category">
-      <option value="category-1">Category 1</option>
-      <option value="category-2">Category 2</option>
-      <option value="category-3">Category 3</option>
-      <option value="category-4">Category 4</option>
-    </select>
+    <mat-form-field appearance="fill">
+      <mat-label>Tags: {{ tagField.value }}</mat-label>
+      <mat-select formControlName="tag" multiple>
+        <mat-option value="tag-1">Tag 1</mat-option>
+        <mat-option value="tag-2">Tag 2</mat-option>
+        <mat-option value="tag-3">Tag 3</mat-option>
+        <mat-option value="tag-4">Tag 4</mat-option>
+      </mat-select>
+    </mat-form-field>
   </p>
 
-  <p>
-    Tags: {{ tagField.value }}
-    <select formControlName="tag" multiple>
-      <option value="tag-1">Tag 1</option>
-      <option value="tag-2">Tag 2</option>
-      <option value="tag-3">Tag 3</option>
-      <option value="tag-4">Tag 4</option>
-    </select>
-  </p>
-
-  <p>
-    Agree: {{ agreeField.value }}
-    <input type="checkbox" formControlName="agree" />
-  </p>
-
+  <mat-checkbox formControlName="agree">Checkbox label</mat-checkbox>
   <div class="messages" [class.active]="agreeField.invalid">
-    <p>
-      <strong *ngIf="agreeField.hasError('required')"
-        >Tienes que aceptar los términos y condiciones</strong
-      >
-    </p>
+    <mat-error *ngIf="agreeField.hasError('required')">
+      Tienes que aceptar los términos y condiciones
+    </mat-error>
   </div>
 
   <p>
     Gender: {{ genderField.value }}
-    <label>
-      <input name="gender" type="radio" value="male" formControlName="gender" />
-      Male
-    </label>
-    <label>
-      <input
-        name="gender"
-        type="radio"
-        value="female"
-        formControlName="gender"
-      />
-      Female
-    </label>
-    <label>
-      <input
-        name="gender"
-        type="radio"
-        value="other"
-        formControlName="gender"
-      />
-      Other
-    </label>
+    <mat-radio-group aria-label="Select an option" formControlName="gender">
+      <mat-radio-button value="male">Male</mat-radio-button>
+      <mat-radio-button value="female">Female</mat-radio-button>
+      <mat-radio-button value="other">Other</mat-radio-button>
+    </mat-radio-group>
   </p>
 
   <p>
     Zone: {{ zoneField.value }}
-    <label>
-      <input name="zone" type="radio" value="zona-1" formControlName="zone" />
-      Zona 1
-    </label>
-    <label>
-      <input name="zone" type="radio" value="zona-2" formControlName="zone" />
-      Zona 2
-    </label>
-    <label>
-      <input name="zone" type="radio" value="zona-3" formControlName="zone" />
-      Zona 3
-    </label>
+    <mat-radio-group aria-label="Select an option" formControlName="zone">
+      <mat-radio-button value="zone-1">Zona 1</mat-radio-button>
+      <mat-radio-button value="zone-2">Zona 2</mat-radio-button>
+      <mat-radio-button value="zone-3">Zona 3</mat-radio-button>
+    </mat-radio-group>
   </p>
 
   <p>
