@@ -35,9 +35,9 @@ export class ProductDetailComponent implements OnInit {
 
   createProduct() {
     const newProduct: Product = {
-      _id: '222',
-      name: 'nuevo desde angular',
-      image: 'assets/images/banner-1.jpg',
+      id: '222',
+      title: 'nuevo desde angular',
+      images: ['assets/images/banner-1.jpg'],
       price: 3000,
       description: 'nuevo producto'
     };

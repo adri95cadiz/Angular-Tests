@@ -1,10 +1,10 @@
 <div *ngIf="product">
   <div>
-    <img [src]="product.image" alt="">
+    <img [src]="product.images[0]" alt="">
   </div>
   <div>
     <ul>
-      <li>Nombre: {{ product.name }}</li>
+      <li>Nombre: {{ product.title }}</li>
       <li>Precio: {{ product.price | currency }}</li>
     </ul>
     <p>{{ product.description }}</p>
